@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="shortcut icon" href="cmb.ico" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>BCM 2011 - 2013</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" />
+    <link rel="stylesheet" href="./main.css" />
+
+    <script src="./libs/OpenLayers.js"></script>
+    <script src="./libs/jquery-1.9.1.min.js"></script>
+    <script src="./libs/poly2tri.js"></script>
+    <script src="./libs/d3.v3.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+
+    <!-- Local configuration -->
+    <script src="./webg.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/dataLoader.js"></script>
+    <script src="js/init.js"></script>
+
+</head>
+<body onload="init()">
+<!-- <div id="legend"></div> -->
+
+	<div id="map"></div>	
+	
+
+	
+	<div>
+				<div id="pc" class="pc_chart_parent pc_background" >
+				<div id ="pc_header" class="btn-minimize pc_background" ><i id=butPC class="fa fa-chevron-down"></i> Parametry dopravních nehod</div> 
+						
+				<div class ="pc_chart_div pc_background" ></div>
+			
+			<div class="pc_chart_div pc_background" >
+
+			</div>
+			<div id="pc_chart" class="pc_chart_div">					
+				<input class="slider_v" id="slider_pc" type="range" name="points" min="10" max="100" />
+			</div>
+		</div>
+
+
+
+		<div id="right">
+			<div id ="logo_header" style="text-align:justify; padding: 15px">
+				<img class="logo" src="logo_mapa.png">
+				Pro vizualizaci vybrané kriminality v Brně byla použita data <a class="span" href="http://www.policie.cz/clanek/mestske-reditelstvi-policie-brno-919452.aspx" target="_blank">Městského policejního ředitelství v&nbsp;Brně</a> z&nbsp;Evidence trestních řízení. Zvolená metoda heatmapy, umožňuje uživateli snadno a rychle identifikovat ohniska dané trestné činnosti. Heatmapa vychází ze vstupních bodově lokalizovaných dat spadajících do zvoleného poloměru. Bodová data jsou zpravidla vztažena k&nbsp;souřadnicím či adresním bodům. V případě nejasné lokalizace ve veřejném prostoru byla lokalizace upravena do středu uvedené popisné informace (typicky parky). V případě potřeby je k&nbsp;dispozici <a class="span" href="https://youtu.be/LRWmjRXOLzw" target="_blank">videonávod</a> nebo návod ve formátu <a class="span" href="bcm_webglayer_navod.pdf" target="_blank">PDF</a>.
+				<ul>
+					<li>Legenda heatmapy je v každém okamžiku aktuální a odpovídá výběru a výřezu mapového okna.</li>
+					<li>U odlehlých izolovaných hodnot nebo méně frekventovaných jevů (znásilnění) si heatmapa uchovává charakter vstupních bodů.</li>
+				</ul>
+			</div>
+			<hr/>
+			
+			<div class="control">	
+				<label>Dataset:  </label>	
+				
+				<form id="dataset-selector">
+				  <input type="radio" name="dataset" value="1" checked> dopravní nehody<br>
+				  <input type="radio" name="dataset" value="2"> krádeže dvoustopých vozidel<br>
+				  <input type="radio" name="dataset" value="3"> loupežná přepadení<br>
+				  <input type="radio" name="dataset" value="4"> znásilnění<br>
+  				</form>
+			</div>
+			<hr/>
+			
+			<div id="dataset-about" style="text-align:justify; padding: 15px">
+				<div id="dataset-name">DOPRAVNÍ NEHODY</div>
+				<div id="dataset-about-content">
+				DOPRAVNÍ NEHODY - tato mapa prezentuje 530 dopravních nehod z let 2011 až 2013. Jedná se o vybrané dopravní nehody s podezřením na spáchání trestného činu (alkohol, zranění, vyšší škoda). 
+				</div>
+
+			</div>
+			<hr/>
+			
+
+			<div id = "chart0">
+<!-- 				<div class="control"> -->
+<!-- 					<div class="sl_label">Radius:</div>		 -->
+<!-- 					   <input class="slider" type ="range" max="100" min="1" -->
+<!--         						oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" -->
+<!--         						step="1" name="points" id="slider_radius?oo" value="10"> -->
+<!-- 					    </input> -->
+<!--     					<em id="rangeValLabel" style="font-style: normal;"></em> -->
+
+<!-- 				</div>				 -->
+				<div class="control">	
+				<label>Data:  </label>		
+					<div><label><input id="points_visible" type="checkbox" name="themap" checked="false"/>body</label></div>
+					<div><label><input id="heatmap_visible" type="checkbox" name="heatmap" checked="true"/>heatmapa </label></div>
+<!--				<label id ='reset'> Reset</label>			-->
+				</div>
+				<hr/>
+			</div>
+<!-- 		<div class="control"> -->
+<!-- 			<div id="heatlegend"></div>					 -->
+<!-- 		</div>			 -->
+		</div>	 		
+	</div>
+
+	<div id="controls">
+		
+		<ul id="controlToggle">
+			<li>
+			
+			<input type="radio" name="type" value="polygon" id="polygonToggle" onclick="toggleControl(this);" />
+			<label class="selectionlabel" for="polygonToggle">vybrat polygonem <a style="font-style: italic; font-size: small; opacity: 0.5">(ukončit dvojklikem)</a></label>
+			</li>
+
+			<li>
+			<input type="radio" name="type" value="modify" id="createVertices" onclick="toggleControl(this);" />
+			<label class="selectionlabel" for="createVertices">upravit polygon <a style="font-style: italic; font-size: small; opacity: 0.5">(upravit lomové body)</a></label>
+			</li>
+			
+			<li>
+			<input type="radio" name="type" value="remove" id="removePolygon" onclick="toggleControl(this);" />
+			<label class="selectionlabel" for="removePolygon">odebrat polygon <a style="font-style: italic; font-size: small; opacity: 0.5">(kliknout na polygon)</a></label>
+			</li>
+			
+		</ul>
+		
+	</div>
+		
+	
+<!-- 	<div id='legend' style="padding:1em"> -->
+<!-- 		<object data="legend2.svg" /> -->
+<!-- 	</div> -->
+</body>
+</html>
